@@ -1,0 +1,20 @@
+﻿@page "/user"
+@inject IJSRuntime Js
+@using CEDTeam.App.Data
+@inject UserService UserService
+<h3>User</h3>
+<div id="user">
+
+</div>
+<script suppress-error="BL9992">
+    alert("ádfasdfasdf");
+</script>
+@code {
+    
+    protected override void OnAfterRender(bool firstRender)
+    {
+        var a = UserService.GetUser().Result;
+        Js.InvokeVoidAsync("cedteam.user.show", a);
+        Js.InvokeVoidAsync("cedteam.alert.show", "ahihi");
+    }
+}
