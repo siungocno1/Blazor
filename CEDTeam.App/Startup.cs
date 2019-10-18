@@ -40,7 +40,13 @@ namespace CEDTeam.App
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
-
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.RequireHeaderSymmetry = false;
+                options.ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
@@ -68,7 +74,7 @@ namespace CEDTeam.App
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseForwardedHeaders();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

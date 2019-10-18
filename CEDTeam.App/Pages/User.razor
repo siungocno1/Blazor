@@ -9,12 +9,22 @@
 <script suppress-error="BL9992">
     alert("ádfasdfasdf");
 </script>
+<div @onload="OnMessage">
+
+</div>
 @code {
-    
+
     protected override void OnAfterRender(bool firstRender)
     {
         var a = UserService.GetUser().Result;
         Js.InvokeVoidAsync("cedteam.user.show", a);
         Js.InvokeVoidAsync("cedteam.alert.show", "ahihi");
+    }
+    protected async Task OnMessage()
+    {
+        while(true)
+        {
+            
+        }
     }
 }
